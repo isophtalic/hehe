@@ -203,16 +203,23 @@
                 heart.removeChild(e);
             }, 5000);
         }
-        
+
         setInterval(function () {
             rain();
         }, 50);
+
+        const now = new Date();
+        const formatted = new Intl.DateTimeFormat("en-US", {
+            timeZone: "Asia/Ho_Chi_Minh",
+            dateStyle: "full",
+            timeStyle: "long"
+        }).format(now);
 
         document.querySelector('.rsvp').addEventListener('click', function () {
             emailjs.send("service_p2g7t5k", "template_q6eu1cc", {
             title: "Xác nhận tham gia buổi hẹn",
             name: "Pham Thi Dieu Linh",
-            time: new Date(),
+            time: formatted,
             message: "Đã xác nhận tham gia buổi hẹn",
             }).then(function(response) {
             console.log("Thành công!", response);
