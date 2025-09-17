@@ -5,42 +5,221 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
+    <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    </script>
     <style>
-        .main {
-            background: url("pexels-blitzboy-1144176.jpg");
-            background-repeat: none;
-            background-size: cover;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: radial-gradient(#4c0c0c, #000);
+        }
+
+        .container {
+            position: relative;
+            height: 430px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            -webkit-box-reflect: below 1px linear-gradient(transparent, transparent, transparent, transparent, #0004);
+        }
+
+        .heart {
+            position: relative;
+            width: 300px;
+            height: 300px;
+        }
+
+        .heart::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 20px;
+            width: 200px;
+            height: 300px;
+            background: #6a1629;
+            border-top-left-radius: 100px;
+            border-top-right-radius: 100px;
+            rotate: 315deg;
+            animation: animateHeart 2s ease infinite;
+        }
+
+        .heart::after {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 92px;
+            width: 200px;
+            height: 300px;
+            background: #6a1629;
+            border-top-left-radius: 100px;
+            border-top-right-radius: 100px;
+            rotate: 45deg;
+            animation: animateHeart 2s ease infinite;
+        }
+
+        @keyframes animateHeart {
+
+            0%,
+            94%,
+            100% {
+                filter: none;
+            }
+
+            50% {
+                filter: drop-shadow(0 0 50px rgb(172, 2, 2)) drop-shadow(0 0 150px rgb(172, 2, 2));
+                background: rgb(172, 2, 2);
+            }
+        }
+
+        .drop {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            top: 20px;
+            filter: drop-shadow(5px 5px 10px #000) drop-shadow(0px 0px 10px rgb(172, 2, 2));
+            transform-origin: bottom;
+            animation: animate 4s linear forwards;
+            z-index: -100000;
+        }
+
+        .drop::before {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 30px;
+            background: rgb(172, 2, 2);
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+            transform-origin: bottom center;
+            rotate: -45deg;
+        }
+
+        .drop::after {
+            content: '';
+            position: absolute;
+            bottom: 2.5px;
+            width: 30px;
+            height: 20px;
+            background: rgb(172, 2, 2);
+            border-top-right-radius: 20px;
+            border-bottom-right-radius: 20px;
+            transform-origin: bottom center;
+            rotate: 315deg;
+        }
+
+        @keyframes animate {
+
+            0% {
+                top: 40px;
+                opacity: 1;
+                scale: 1;
+            }
+
+            70% {
+                top: 400px;
+                opacity: 1;
+            }
+
+            80% {
+                top: 400px;
+                opacity: 1;
+            }
+
+            100% {
+                top: 400px;
+                opacity: 0;
+                scale: 0;
+            }
+        }
+
         .hidden {
             display: none;
         }
-
     </style>
 </head>
 
 <body>
-    <div class="w-screen h-screen flex justify-center items-center main">
+    <div class="container">
+        <div class="heart"></div>
         <div
-            class="max-w-lg mx-auto p-6 rounded-xl bg-black-500/10 backdrop-blur-md border border-white/20 shadow-lg text-black transition-transform duration-300 hover:scale-105 hover:shadow-xl hover:bg-white/20">
-            <h2 class="text-2xl font-semibold mb-2">You're Invited!</h2>
-            <p class="text-sm mb-4">Join us for an unforgettable evening of fun, food, and friends.</p>
-
+            class="absolute -top-24 max-w-lg mx-auto p-6 rounded-xl bg-white/20 backdrop-blur-md border border-white/20 shadow-lg text-black transition-transform duration-300 hover:scale-105 hover:shadow-xl hover:bg-white/20">
+            <h2 class="text-2xl font-semibold mb-2 text-stone-100">Dear Diệu Linh 💖!</h2>
+            <p class="text-sm mb-4 text-gray-100">
+                ...
+                <br>Những điều tớ lo lắng nhất cuối cùng cũng đã xảy ra. Tớ biết mình không giỏi diễn đạt lắm, nhưng có
+                những lời tớ cần nói với Linh.
+            </p>
+            <p class="text-sm mb-4 text-gray-100">
+                Tớ có thể mời Linh đi ăn tối được không? Thực ra tớ đã muốn làm điều này từ lâu rồi, chỉ là
+                những chuyện gần đây khiến tớ phải trì hoãn đến bây giờ.<br>
+            </p>
+            <p class="text-sm mb-4 text-gray-100">
+                Hy vọng bé sẽ nhận lời. Nếu Linh đồng ý, hãy nhấn nút bên dưới nhé! Dù kết quả thế nào, tớ
+                cũng cảm ơn bé vì đã dành thời gian đọc những dòng này💖.
+            </p>
+            <p class="mb-4 text-sm italic text-gray-100">#isophtalic</p>
             <div class="mb-4">
-                <p class="text-sm"><strong>Date:</strong> August 10, 2025</p>
-                <p class="text-sm"><strong>Time:</strong> 6:00 PM</p>
-                <p class="text-sm"><strong>Location:</strong> 123 Celebration Street</p>
+                <p class="text-sm text-gray-100"><strong>Ngày:</strong>T6 19/10/2025</p>
+                <p class="text-sm text-gray-100"><strong>Thời gian:</strong> 6:00 PM</p>
+                <p class="text-sm text-gray-100">
+                    <strong>Địa điểm:</strong>
+                    Vua chả cá ( cơ sở 7 ), số 76 Trần Thái Tông – Cầu Giấy – Hà Nội
+                </p>
             </div>
-
             <button class="w-full bg-white/20 hover:bg-white/30 text-white font-medium py-2 rounded transition rsvp">
-                RSVP Now
+                RSVP
             </button>
         </div>
     </div>
     <script>
-        const button = document.querySelector('button.rsvp')
-        button.addEventListener('click', function(_, ev) {
-            console.log(button.classList.toggle('hidden'))
-        })
+        (function() {
+            emailjs.init({
+                publicKey: "nm4pViyo6logJe3mS"
+            });
+        })();
+
+        function rain() {
+            let heart = document.querySelector('.heart');
+            let e = document.createElement('div');
+            e.classList.add('drop');
+            heart.appendChild(e);
+
+            let left = Math.floor(Math.random() * 300);
+            let delay = Math.floor(Math.random() * 5000);
+            e.style.animationDelay = `${delay}ms`;
+            e.style.left = `${left}px`;
+
+            setTimeout(() => {
+                heart.removeChild(e);
+            }, 5000);
+        }
+        
+        setInterval(function () {
+            rain();
+        }, 50);
+
+        document.querySelector('.rsvp').addEventListener('click', function () {
+            emailjs.send("service_p2g7t5k", "template_q6eu1cc", {
+            title: "Xác nhận tham gia buổi hẹn",
+            name: "Pham Thi Dieu Linh",
+            time: new Date(),
+            message: "Đã xác nhận tham gia buổi hẹn",
+            }).then(function(response) {
+            console.log("Thành công!", response);
+            }, function(error) {
+            console.log("Lỗi gửi email:", error);
+            });
+        });
     </script>
 </body>
 
