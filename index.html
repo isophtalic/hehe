@@ -5,8 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
     </script>
     <style>
         * {
@@ -142,6 +141,27 @@
             }
         }
 
+        .heart-pop {
+            position: absolute;
+            font-size: 16px;
+            color: #ff4d6d;
+            animation: floatUp 0.9s ease-out forwards;
+            pointer-events: none;
+            z-index: 20;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-40px);
+                opacity: 0;
+            }
+        }
+
         .hidden {
             display: none;
         }
@@ -152,37 +172,60 @@
     <div class="container">
         <div class="heart"></div>
         <div
-            class="absolute -top-24 max-w-lg mx-auto p-6 rounded-xl bg-white/20 backdrop-blur-md border border-white/20 shadow-lg text-black transition-transform duration-300 hover:scale-105 hover:shadow-xl hover:bg-white/20">
+            class="wrap-text absolute -top-24 max-w-lg mx-auto p-6 rounded-xl bg-white/20 backdrop-blur-md border border-white/20 shadow-lg text-black transition-transform duration-300 hover:scale-105 hover:shadow-xl hover:bg-white/20">
             <h2 class="text-2xl font-semibold mb-2 text-stone-100">Dear Diệu Linh 💖!</h2>
             <p class="text-sm mb-4 text-gray-100">
                 ...
                 <br>Những điều tớ lo lắng nhất cuối cùng cũng đã xảy ra. Tớ biết mình không giỏi diễn đạt lắm, nhưng có
                 những lời tớ cần nói với Linh.
             </p>
+            <div class="relative">
+                <p class="text-sm mb-4 text-gray-100" id="typing-text">
+                </p>
+            </div>
             <p class="text-sm mb-4 text-gray-100">
-                Tớ có thể mời Linh đi ăn tối được không? Thực ra tớ đã muốn làm điều này từ lâu rồi, chỉ là
-                những chuyện gần đây khiến tớ phải trì hoãn đến bây giờ.<br>
+
             </p>
             <p class="text-sm mb-4 text-gray-100">
-                Hy vọng bé sẽ nhận lời. Nếu Linh đồng ý, hãy nhấn nút bên dưới nhé! Dù kết quả thế nào, tớ
-                cũng cảm ơn bé vì đã dành thời gian đọc những dòng này💖.
+
             </p>
+
             <p class="mb-4 text-sm italic text-gray-100">#isophtalic</p>
             <div class="mb-4">
-                <p class="text-sm text-gray-100"><strong>Ngày:</strong>T6 19/10/2025</p>
-                <p class="text-sm text-gray-100"><strong>Thời gian:</strong> 6:00 PM</p>
+                <p class="text-sm text-gray-100"><strong>- Ngày:</strong> T6 19/10/2025</p>
+                <p class="text-sm text-gray-100"><strong>- Thời gian:</strong> 6:30 PM</p>
                 <p class="text-sm text-gray-100">
-                    <strong>Địa điểm:</strong>
+                    <strong>- Địa điểm:</strong>
                     Vua chả cá ( cơ sở 7 ), số 76 Trần Thái Tông – Cầu Giấy – Hà Nội
                 </p>
             </div>
-            <button class="w-full bg-white/20 hover:bg-white/30 text-white font-medium py-2 rounded transition rsvp">
-                RSVP
+            <button
+                class="w-full bg-white/20 hover:bg-white/30 text-white font-medium py-2 rounded transition rsvp hidden flex items-center justify-center">
+                <span class="text-button">
+                    RSVP
+                </span>
+                <div class="w-12 h-12 loading hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 150">
+                        <path fill="none" stroke="#FF156D" stroke-width="15" stroke-linecap="round"
+                            stroke-dasharray="300 385" stroke-dashoffset="0"
+                            d="M275 75c0 31-27 50-50 50-58 0-92-100-150-100-28 0-50 22-50 50s23 50 50 50c58 0 92-100 150-100 24 0 50 19 50 50Z">
+                            <animate attributeName="stroke-dashoffset" calcMode="spline" dur="2" values="685;-685"
+                                keySplines="0 0 1 1" repeatCount="indefinite"></animate>
+                        </path>
+                    </svg>
+                </div>
             </button>
         </div>
     </div>
+    <img src="valentine.gif" alt="Decoration" class="absolute bottom-0 right-0 w-full h-full opacity-50 -z-50 hidden"
+        id="after-gif-1">
+    <img src="CatLove.gif" alt="Decoration" class="absolute w-[50dvw] h-[50dvh] z-50 hidden" id="after-gif-2">
     <script>
-        (function() {
+        const rsvpButton = document.querySelector('.rsvp');
+        const textButton = document.querySelector('.text-button');
+        const loading = document.querySelector('.loading');
+        const wrapText = document.querySelector('.wrap-text');
+        (function () {
             emailjs.init({
                 publicKey: "nm4pViyo6logJe3mS"
             });
@@ -208,6 +251,43 @@
             rain();
         }, 50);
 
+        const text = `Tớ có thể mời Linh đi ăn tối được không 💌? Thực ra tớ đã muốn làm điều này từ lâu rồi, chỉ là
+                những chuyện gần đây khiến tớ phải trì hoãn đến bây giờ. Hy vọng bé sẽ nhận lời. Nếu Linh đồng ý, hãy nhấn nút bên dưới nhé! Dù kết quả thế nào, tớ
+                cũng cảm ơn bé vì đã dành thời gian đọc những dòng này💖.`;
+        const container = document.getElementById("typing-text");
+        let i = 0;
+
+        function typeLetter() {
+            if (i < text.length) {
+                const span = document.createElement("span");
+                span.textContent = text[i];
+                container.appendChild(span);
+
+                // Tạo trái tim bay tại vị trí của ký tự vừa gõ
+                const rect = span.getBoundingClientRect();
+
+                const heart = document.createElement("span");
+                heart.className = "heart-pop";
+                heart.textContent = "❤️";
+                heart.style.left = rect.left + "px";
+                heart.style.top = rect.top + "px";
+
+                document.body.appendChild(heart);
+
+                setTimeout(() => {
+                    heart.remove();
+                }, 1000);
+
+                i++;
+                setTimeout(typeLetter, 50);
+            } else {
+                rsvpButton.classList.remove('hidden');
+            }
+
+        }
+
+        typeLetter();
+
         const now = new Date();
         const formatted = new Intl.DateTimeFormat("en-US", {
             timeZone: "Asia/Ho_Chi_Minh",
@@ -215,18 +295,49 @@
             timeStyle: "long"
         }).format(now);
 
-        document.querySelector('.rsvp').addEventListener('click', function () {
-            emailjs.send("service_p2g7t5k", "template_q6eu1cc", {
-            title: "Xác nhận tham gia buổi hẹn",
-            name: "Pham Thi Dieu Linh",
-            time: formatted,
-            message: "Đã xác nhận tham gia buổi hẹn",
-            }).then(function(response) {
-            console.log("Thành công!", response);
-            }, function(error) {
-            console.log("Lỗi gửi email:", error);
-            });
-        });
+        let gifAfter1 = document.getElementById('after-gif-1');
+        let gifAfter2 = document.getElementById('after-gif-2');
+
+        rsvpButton.addEventListener('click', handleRSVP);
+
+        async function handleRSVP() {
+            textButton.classList.add('hidden');
+            loading.classList.remove('hidden');
+            try {
+                let response = await emailjs.send("service_p2g7t5k", "template_q6eu1cc", {
+                    title: "Xác nhận tham gia buổi hẹn",
+                    name: "Pham Thi Dieu Linh",
+                    time: formatted,
+                    message: "Đã xác nhận tham gia buổi hẹn",
+                })
+
+                wrapText.classList.add('hidden');
+                setTimeout(function () {
+                    gifAfter1.classList.remove('hidden');
+                    // Ẩn lại sau 1s
+                    setTimeout(function () {
+                        gifAfter1.classList.add('hidden');
+                    }, 5000);
+                }, 1000);
+
+                // Hiển thị gifAfter2 sau 2s
+                setTimeout(function () {
+                    gifAfter2.classList.remove('hidden');
+                    setTimeout(function () {
+                        gifAfter2.classList.add('hidden');
+                    }, 3000);
+                }, 6000);
+
+                console.log("Email sent successfully:", response.status, response.text);
+
+
+            } catch (error) {
+                console.log("Lỗi gửi email:", error);
+            } finally {
+                textButton.classList.remove('hidden');
+                loading.classList.add('hidden');
+            }
+        }
     </script>
 </body>
 
